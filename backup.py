@@ -169,19 +169,17 @@ if dumpftp:
                 print('Downloading ' + src + ' failed. Trying later.')
                 failedFiles.append((src, dest))
 
-    print('Trying to redownload failed files')
-    tries = 1
-    while tries <= 3 and len(failedFiles) > 0:
-        print('Attempt ' + str(tries))
-        for src, dest in failedFiles:
-            try:
-                host.keep_alive()
-                host.download(src, dest)
-                failedFiles.remove((src, dest))
-            except ftputil.error.FTPIOError:
-                print('Downloading ' + src + ' failed. Trying later.')
-                failedFiles.append((src, dest))
-        tries = tries + 1
+    if len(failedFiles) > 0:
+        print('Trying to redownload failed files (' + str(len(failedFiles)) + ' files failed)')
+        while len(failedFiles) > 0:
+            for src, dest in failedFiles:
+                try:
+                    host.keep_alive()
+                    host.download(src, dest)
+                    failedFiles.remove((src, dest))
+                except ftputil.error.FTPIOError:
+                    print('Downloading ' + src + ' failed. Trying later.')
+                    failedFiles.append((src, dest))
     print('Done dumping FTP.')
 
 #
