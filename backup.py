@@ -165,7 +165,7 @@ if dumpftp:
             host.keep_alive()
             try:
                 host.download(src, dest)
-            except FTPIOError:
+            except ftputil.error.FTPIOError:
                 print('Downloading ' + src + ' failed. Trying later.')
                 failedFiles.append((src, dest))
 
@@ -178,7 +178,7 @@ if dumpftp:
                 host.keep_alive()
                 host.download(src, dest)
                 failedFiles.remove((src, dest))
-            except FTPIOError:
+            except ftputil.error.FTPIOError:
                 print('Downloading ' + src + ' failed. Trying later.')
                 failedFiles.append((src, dest))
         tries = tries + 1
