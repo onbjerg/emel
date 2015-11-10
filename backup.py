@@ -193,7 +193,7 @@ def zipdir(path, ziph):
 
 if __name__ == '__main__':
     print('Zipping up all the things.')
-    zipf = zipfile.ZipFile(out + '.zip', 'w')
+    zipf = zipfile.ZipFile(out + '.zip', 'w', zipfile.ZIP_DEFLATED)
     zipdir(out, zipf)
     zipf.close()
     shutil.rmtree(out)
